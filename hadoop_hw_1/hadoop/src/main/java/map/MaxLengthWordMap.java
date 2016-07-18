@@ -1,25 +1,24 @@
 package map;
 
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reporter;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
 
 /**
  * Created by Lev_Khacheresiantc on 7/13/2016.
  */
-public class MaxLengthMap extends Mapper<Object, Text, Text, IntWritable> {
+public class MaxLengthWordMap
+    extends Mapper<LongWritable, Text, IntWritable, Text> {
 
-    private Text word = new Text();
     private IntWritable size = new IntWritable();
+    private Text word = new Text();
 
 
-    public void map(Object o, Text text, Context ctx) throws IOException, InterruptedException {
+    public void map(LongWritable docId, Text text, Context ctx)
+        throws IOException, InterruptedException {
 
         String[] words = text.toString()
                 .toLowerCase()
@@ -29,7 +28,7 @@ public class MaxLengthMap extends Mapper<Object, Text, Text, IntWritable> {
         for (String wordStr : words) {
             word.set(wordStr);
             size.set(word.getLength());
-            ctx.write(word, size);
+            ctx.write(size, word);
         }
     }
 

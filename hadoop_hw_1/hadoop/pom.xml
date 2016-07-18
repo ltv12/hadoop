@@ -12,7 +12,6 @@
         <main.class>MaxLengthDriver</main.class>
         <scp.host>localhost</scp.host>
         <scp.dirCopyFrom>${project.basedir}/target</scp.dirCopyFrom>
-        <scp.keyfile>D:\work\settings\pk_hdp\user_to_copy\id_rsa.pub</scp.keyfile>
 
     </properties>
 

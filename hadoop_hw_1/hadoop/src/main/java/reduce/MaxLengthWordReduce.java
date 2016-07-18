@@ -1,40 +1,34 @@
 package reduce;
 
-import map.MaxLengthMap;
+import java.io.IOException;
+
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Created by Lev_Khacheresiantc on 7/13/2016.
  */
 public class MaxLengthWordReduce
-    extends Reducer<Text, IntWritable, Text, IntWritable> {
+    extends Reducer<IntWritable, Text, IntWritable, Text> {
 
-    private IntWritable size = new IntWritable(0);
-    private IntWritable maxSize = new IntWritable(0);
-    private Text word = new Text();
+    private Text words = new Text();
 
     @Override
-    protected void reduce(Text key, Iterable<IntWritable> values,
-        Context context) throws IOException, InterruptedException {
-        Iterator<IntWritable> iterator = values.iterator();
-        if (iterator.hasNext()) {
-            size.set(iterator.next().get());
-            if (maxSize.get() < size.get()) {
-                maxSize.set(size.get());
-                word.set(key);
+    public void run(Context context) throws IOException, InterruptedException {
+        setup(context);
+        try {
+            if (context.nextKey()) {
+                StringBuilder sb = new StringBuilder();
+                for (Text word : context.getValues()) {
+                    sb.append(word.toString()).append(" ");
+                }
+                words.set(sb.toString());
+                context.write(context.getCurrentKey(), words);
             }
+        } finally {
+            cleanup(context);
         }
-    }
-
-    @Override
-    protected void cleanup(Context context)
-        throws IOException, InterruptedException {
-        context.write(word, maxSize);
     }
 }
