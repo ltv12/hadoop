@@ -9,7 +9,7 @@
     <version>1</version>
 
     <properties>
-        <main.class>MaxLengthDriver</main.class>
+        <main.class>main.java.CounterDriver</main.class>
         <scp.host>localhost</scp.host>
         <hadoop.version>2.7.1</hadoop.version>
         <scp.dirCopyFrom>${project.basedir}/target</scp.dirCopyFrom>
@@ -53,7 +53,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
