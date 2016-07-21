@@ -1,5 +1,3 @@
-package main.java;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
@@ -67,7 +65,7 @@ public class CounterDriver {
             outputStream = fs.create(outputFile);
 
             for (String key : top100) {
-                outputStream.writeUTF(key + " " + cache.get(key) + "\n");
+                outputStream.writeChars(key + " " + cache.get(key) + "\n");
             }
 
         } catch (IOException ioe) {
