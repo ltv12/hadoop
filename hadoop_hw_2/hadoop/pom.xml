@@ -5,47 +5,72 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hadoop</groupId>
-    <artifactId>hw-number</artifactId>
+    <artifactId>hw-4</artifactId>
     <version>1</version>
 
     <properties>
-        <main.class>MaxLengthDriver</main.class>
+        <main.class>CounterDriver</main.class>
         <scp.host>localhost</scp.host>
         <hadoop.version>2.7.1</hadoop.version>
         <scp.dirCopyFrom>${project.basedir}/target</scp.dirCopyFrom>
-
+        <scope>provided</scope>
     </properties>
+
 
     <dependencies>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-api</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-common</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-client</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.14</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mrunit</groupId>
+            <artifactId>mrunit</artifactId>
+            <classifier>hadoop2</classifier>
+            <scope>test</scope>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
@@ -86,7 +111,7 @@
                             <target>
                                 <echo message="Push to server/home/"/>
                                 <scp trust="true"
-                                     todir="user_to_copy@localhost:/hw/hw-2" port="2222" password="copy_file">
+                                     todir="user_to_copy@localhost:/hw/hw-4" port="2222" password="copy_file">
 
                                     <fileset dir="${scp.dirCopyFrom}">
                                         <include name="*.jar"/>
