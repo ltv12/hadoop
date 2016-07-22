@@ -5,13 +5,32 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hadoop</groupId>
-    <artifactId>hw-number</artifactId>
+    <artifactId>${app.name}</artifactId>
     <version>1</version>
+    <name>${app.name}</name>
+
+    <profiles>
+        <profile>
+            <id>hw-3-1</id>
+            <properties>
+                <main.class>LogHandlerDriver_v1</main.class>
+                <app.name>hw-3-1</app.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>hw-3-2</id>
+            <properties>
+                <main.class>LogHandlerDriver_v2</main.class>
+                <app.name>hw-3-2</app.name>
+            </properties>
+        </profile>
+
+    </profiles>
 
     <properties>
-        <main.class>MaxLengthDriver</main.class>
         <scp.host>localhost</scp.host>
         <hadoop.version>2.7.1</hadoop.version>
+        <scope>provided</scope>
         <scp.dirCopyFrom>${project.basedir}/target</scp.dirCopyFrom>
 
     </properties>
@@ -21,31 +40,55 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-api</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-common</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-yarn-client</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.14</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mrunit</groupId>
+            <artifactId>mrunit</artifactId>
+            <classifier>hadoop2</classifier>
+            <scope>test</scope>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
@@ -61,15 +104,29 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>${main.class}</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>${main.class}</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Class-Path>../target/classes</Class-Path>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -86,7 +143,7 @@
                             <target>
                                 <echo message="Push to server/home/"/>
                                 <scp trust="true"
-                                     todir="user_to_copy@localhost:/hw/hw-2" port="2222" password="copy_file">
+                                     todir="user_to_copy@localhost:/hw/hw-3" port="2222" password="copy_file">
 
                                     <fileset dir="${scp.dirCopyFrom}">
                                         <include name="*.jar"/>
