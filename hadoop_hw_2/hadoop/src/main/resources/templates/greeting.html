@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot and Thymeleaf example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h3>Spring Boot and Thymeleaf, part 2 - forms</h3>
+<form action="#" th:action="@{/}" th:object="${post}" method="post">
+    <table>
+        <tr>
+            <td>memory:</td>
+            <td><input type="memory" th:field="*{memory}" /></td>
+            <td th:if="${#fields.hasErrors('memory')}" th:errors="*{memory}">memory error message</td>
+        </tr>
+        <tr>
+            <td>Cores:</td>
+            <td><input type="number" th:field="*{Cores}" /></td>
+            <td th:if="${#fields.hasErrors('Cores')}" th:errors="*{Cores}">Cores error message</td>
+        </tr>
+        <tr>
+            <td>Priority:</td>
+            <td><input type="number" th:field="*{Priority}" /></td>
+            <td th:if="${#fields.hasErrors('Priority')}" th:errors="*{Priority}">Priority error message</td>
+        </tr>
+        <tr>
+            <td>Number of containers:</td>
+            <td><input type="number" th:field="*{containersNumber}" /></td>
+            <td th:if="${#fields.hasErrors('containersNumber')}" th:errors="*{containersNumber}">containersNumber error message</td>
+        </tr>
+        <tr>
+            <td>Jar to execute:</td>
+            <td><input type="text" th:field="*{comand}" /></td>
+            <td th:if="${#fields.hasErrors('comand')}" th:errors="*{comand}">comand error message</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit post</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
