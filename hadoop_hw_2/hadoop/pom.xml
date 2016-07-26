@@ -9,7 +9,7 @@
     <version>1</version>
 
     <properties>
-        <main.class>main.java.CounterDriver</main.class>
+        <main.class>CounterDriver</main.class>
         <scp.host>localhost</scp.host>
         <hadoop.version>2.7.1</hadoop.version>
         <scp.dirCopyFrom>${project.basedir}/target</scp.dirCopyFrom>
