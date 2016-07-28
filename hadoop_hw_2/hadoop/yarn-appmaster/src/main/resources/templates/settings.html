@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Yarn Controller</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h3> Configuration parameters</h3>
+<p th:text="'Core : ' + ${settings.cores}"></p>
+<p th:text="'Memory : ' + ${settings.memory}"></p>
+<p th:text="'Priority: ' + ${settings.priority}"></p>
+<p th:text="'Containers: ' + ${settings.numberOfContainers}"></p>
+
+<h3>Controller settings:</h3>
+<form action="#" th:action="@{/}" th:object="${settings}" method="post">
+    <table>
+        <tr>
+            <td>Core (min= 1, max = 2):</td>
+            <td><input type="text" th:field="*{cores}"/></td>
+            <td th:if="${#fields.hasErrors('memory')}" th:errors="*{memory}">Title error message</td>
+        </tr>
+        <tr>
+            <td>Memory (min = 1, max = 4096):</td>
+            <td><input type="text" th:field="*{memory}"/></td>
+            <td th:if="${#fields.hasErrors('memory')}" th:errors="*{memory}">Title error message</td>
+        </tr>
+        <tr>
+            <td>Priority (min 1, max = 3):</td>
+            <td><input type="text" th:field="*{priority}"/></td>
+            <td th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}">Content error message</td>
+        </tr>
+        <tr>
+            <td>Number of containers (min = 1, max = 5):</td>
+            <td><input type="text" th:field="*{numberOfContainers}"/></td>
+            <td th:if="${#fields.hasErrors('numberOfContainers')}" th:errors="*{numberOfContainers}">Content error
+                message
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Accept application master</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
